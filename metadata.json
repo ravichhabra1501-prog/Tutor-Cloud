@@ -1,0 +1,6 @@
+{
+  "name": "TutorCloud",
+  "description": "Adaptive Learning Agent - An AI tutor that builds personal learning profiles, adapts quiz difficulty, generates exercises, and tracks progress.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

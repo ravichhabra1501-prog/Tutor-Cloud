@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "profile": {
+      "title": "Student Profile",
+      "description": "Student learning profile tracking stats, topic masteries, and earned badges",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The unique Firebase Auth UID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "Student display name" },
+        "xp": { "type": "integer", "description": "Total experience points earned" },
+        "level": { "type": "integer", "description": "Student's current level based on XP" },
+        "streakDays": { "type": "integer", "description": "Current consecutive study days streak" },
+        "lastActiveDate": { "type": "string", "description": "ISO string of the last active date" },
+        "difficultyLevel": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"], "description": "Current ELO difficulty level" },
+        "badges": { "type": "array", "description": "List of earned badge IDs" },
+        "topicMastery": { "type": "object", "description": "Map of topic names to mastery percentage (0-100)" },
+        "fieldOfStudy": { "type": "string", "enum": ["Medical", "Commerce", "Engineering", "Technology", "Other"], "description": "Primary academic discipline or field of need/study" },
+        "createdAt": { "type": "string", "description": "Account creation timestamp" }
+      },
+      "required": ["userId", "email", "xp", "level", "streakDays", "difficultyLevel", "badges", "topicMastery"]
+    },
+    "quizAttempt": {
+      "title": "Quiz Attempt",
+      "description": "Record of a completed quiz session used for ELO calculation and analytics",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique attempt identifier" },
+        "userId": { "type": "string", "description": "UID of the student" },
+        "topic": { "type": "string", "description": "Subject topic of the quiz" },
+        "difficulty": { "type": "string", "description": "Difficulty of the questions" },
+        "score": { "type": "integer", "description": "Number of correct answers" },
+        "totalQuestions": { "type": "integer", "description": "Total number of questions in quiz" },
+        "percentage": { "type": "integer", "description": "Score percentage" },
+        "xpGained": { "type": "integer", "description": "XP rewarded for this attempt" },
+        "eloDelta": { "type": "integer", "description": "Elo-style mastery score change" },
+        "timestamp": { "type": "string", "description": "ISO string of submission time" }
+      },
+      "required": ["id", "userId", "topic", "difficulty", "score", "totalQuestions", "percentage", "xpGained", "eloDelta", "timestamp"]
+    },
+    "leaderboardEntry": {
+      "title": "Leaderboard Entry",
+      "description": "Public high-score ranking entry",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Student UID" },
+        "displayName": { "type": "string", "description": "Student display name" },
+        "xp": { "type": "integer", "description": "Current experience points" },
+        "level": { "type": "integer", "description": "Current level" }
+      },
+      "required": ["userId", "displayName", "xp", "level"]
+    }
+  },
+  "firestore": {
+    "profiles/{userId}": {
+      "schema": "profile",
+      "description": "Student user profiles and learning statistics"
+    },
+    "quizAttempts/{attemptId}": {
+      "schema": "quizAttempt",
+      "description": "Chronological log of student quiz activities"
+    },
+    "leaderboard/{userId}": {
+      "schema": "leaderboardEntry",
+      "description": "Global leaderboard rankings for active gamification"
+    }
+  }
+}
